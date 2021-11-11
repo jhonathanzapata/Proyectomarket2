@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Proyecto ciclo 4.2</string>
+    <string name="test_welcome">Welcome</string>
+    <string name="test_user">Jhon</string>
 </resources>
