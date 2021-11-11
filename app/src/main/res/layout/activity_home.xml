@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Home">
+    tools:context=".HomeActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,7 +32,7 @@
             android:orientation="vertical">
 
             <TextView
-
+                android:id="@+id/textviewemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -41,7 +41,7 @@
                 android:textColor="@color/text_blue" />
 
             <TextView
-
+                android:id="@+id/textviewprovider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -69,19 +69,19 @@
         android:orientation="vertical">
 
         <Button
-
+            android:id="@+id/btn_cerrarsesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:onClick="Prueba"
+            android:onClick="signOut"
             android:text="Cerrar Sesion" />
 
         <ImageButton
-
+            android:id="@+id/imageButton"
             android:layout_width="53dp"
             android:layout_height="49dp"
             android:background="@color/text_blue"
-            android:onClick="Prueba2"
+
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/logo_market"
             tools:ignore="SpeakableTextPresentCheck" />
