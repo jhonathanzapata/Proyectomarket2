@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "773613763342",
+    "project_id": "proyecto-ciclo-4",
+    "storage_bucket": "proyecto-ciclo-4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773613763342:android:8e3d308d6b2c1f22fab55f",
+        "android_client_info": {
+          "package_name": "com.example.proyectociclo42"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773613763342-of52hjim391egkeonsrisa0irmevkbjd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCgCVuX6vaSSba7yEJgMQDzISwIoQnr8hI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773613763342-of52hjim391egkeonsrisa0irmevkbjd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

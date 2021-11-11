@@ -40,6 +40,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/edtemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="email@domain.com"
@@ -56,6 +57,7 @@
             android:textStyle="bold"/>
 
         <EditText
+            android:id="@+id/edtpassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="your password"
@@ -72,12 +74,14 @@
         android:gravity="center|top">
 
         <Button
+            android:id="@+id/btnlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="LOGIN"
             android:layout_margin="10dp"/>
 
         <Button
+            android:id="@+id/btnregister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="REGISTER"
@@ -93,6 +97,7 @@
         android:gravity="center|top">
 
         <ImageButton
+            android:id="@+id/btngoogle"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/boton_google"
@@ -100,6 +105,7 @@
             android:scaleType="centerInside"/>
 
         <ImageButton
+            android:id="@+id/btnfacebook"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/boton_facebook"
@@ -108,11 +114,6 @@
 
 
     </LinearLayout>
-
-
-
-
-
 
 
 </LinearLayout>
