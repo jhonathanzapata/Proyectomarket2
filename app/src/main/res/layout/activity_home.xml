@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/test_welcome"
+                android:text="Usuario"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/text_blue" />
 
@@ -45,17 +45,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/test_user"
+                android:text="Plan"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:textColor="@color/text_blue" />
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_weight="45"
-            android:src="@drawable/logo_market" />
 
 
     </LinearLayout>

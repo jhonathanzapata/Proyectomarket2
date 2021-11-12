@@ -1,5 +1,7 @@
 package com.example.proyectociclo42
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -8,7 +10,8 @@ import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 
 enum class ProviderType{
-    BASIC
+    BASIC,
+    GOOGLE
 }
 
 class HomeActivity : AppCompatActivity() {
@@ -25,6 +28,11 @@ class HomeActivity : AppCompatActivity() {
         val provider:String?=bundle?.getString("provider")
 
         setup(email?:"",provider?:"")
+
+        val prefs:SharedPreferences.Editor=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email",email)
+        prefs.putString("provider",provider)
+        prefs.apply()
     }
 
     private fun setup(email:String,provider:String){
@@ -40,6 +48,11 @@ class HomeActivity : AppCompatActivity() {
     }
 
     fun signOut(botonCerrarSesion:View){
+
+        val prefs:SharedPreferences.Editor=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.apply()
+
         FirebaseAuth.getInstance().signOut()
         onBackPressed()
     }
