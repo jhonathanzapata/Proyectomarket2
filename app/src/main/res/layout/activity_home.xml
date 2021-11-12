@@ -68,14 +68,6 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_cerrarsesion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:onClick="signOut"
-            android:text="Cerrar Sesion" />
-
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="53dp"
@@ -86,7 +78,22 @@
             app:srcCompat="@drawable/logo_market"
             tools:ignore="SpeakableTextPresentCheck" />
 
+        <Button
+            android:id="@+id/btn_cerrarsesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:onClick="signOut"
+            android:text="Cerrar Sesion" />
+
     </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_productos"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -97,6 +104,7 @@
         android:backgroundTint="@color/text_blue"
         android:src="@android:drawable/ic_input_add"
         tools:ignore="SpeakableTextPresentCheck" />
+
 
 
 </LinearLayout>

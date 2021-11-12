@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 
 enum class ProviderType{
     BASIC
@@ -23,6 +27,9 @@ class HomeActivity : AppCompatActivity() {
         val bundle:Bundle?=intent.extras
         val email:String?=bundle?.getString("email")
         val provider:String?=bundle?.getString("provider")
+        val recyclerView_productos = findViewById<RecyclerView>(R.id.recyclerView_productos)
+        recyclerView_productos.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false)
+
 
         setup(email?:"",provider?:"")
     }
