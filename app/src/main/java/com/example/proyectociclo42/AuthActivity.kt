@@ -11,12 +11,14 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-
-
+import com.google.firebase.auth.GoogleAuthProvider
 
 
 class AuthActivity : AppCompatActivity() {
+
+    private val GOOGLE_SIGN_IN=100
 
     private var edt_email: EditText?=null
     private var edt_password: EditText?=null
@@ -37,13 +39,16 @@ class AuthActivity : AppCompatActivity() {
 
     fun setupgoogle(botongoogle:View){
 
-        val googleconf=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        val googleConf=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id2))
             .requestEmail()
             .build()
 
-        val googleclient=GoogleSignIn.getClient(this,googleconf)
+        val googleclient=GoogleSignIn.getClient(this,googleConf)
 
+        googleclient.signOut()
 
+        startActivityForResult(googleclient.signInIntent, GOOGLE_SIGN_IN)
 
     }
 
@@ -61,6 +66,11 @@ class AuthActivity : AppCompatActivity() {
             authlayout.visibility=View.INVISIBLE
             showHome(email,ProviderType.valueOf(provider))
         }
+
+    }
+    fun setup2(botonregister: View){
+        val RegisterIntent= Intent(this,RegisterActivity::class.java)
+        startActivity(RegisterIntent)
 
     }
 
@@ -131,5 +141,34 @@ class AuthActivity : AppCompatActivity() {
         }
         startActivity(HomeIntent)
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode==GOOGLE_SIGN_IN){
+            val task=GoogleSignIn.getSignedInAccountFromIntent(data)
+
+            try{
+                val account= task.getResult(ApiException::class.java)
+
+                if(account!=null){
+
+                    val credential=GoogleAuthProvider.getCredential(account.idToken,null)
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener{
+                        if(it.isSuccessful){
+                            showHome(account.email?:"",ProviderType.GOOGLE)
+                        }else{
+                            showAlert()
+                        }
+                    }
+                }
+            } catch (e:ApiException){
+                showAlert()
+            }
+
+
+
+        }
     }
 }

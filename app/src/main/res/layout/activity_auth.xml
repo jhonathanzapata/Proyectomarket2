@@ -89,7 +89,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="REGISTER"
-            android:onClick="setup"
+            android:backgroundTint="@color/green"
+            android:onClick="setup2"
             android:layout_margin="10dp"/>
 
 
@@ -107,6 +108,7 @@
             android:layout_height="100dp"
             android:src="@drawable/boton_google"
             android:layout_margin="6dp"
+            android:onClick="setupgoogle"
             android:scaleType="centerInside"/>
 
         <ImageButton
