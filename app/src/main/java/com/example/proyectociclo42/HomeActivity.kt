@@ -33,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
 
     var db=FirebaseFirestore.getInstance()
 
+    private var listProduct = mutableListOf<Productos>()
+    private lateinit var productAdapter: AdaptaProducto
+    private lateinit var recycleView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -45,23 +49,23 @@ class HomeActivity : AppCompatActivity() {
         recyclerView_productos.setHasFixedSize(true)
 
         //configuracion del adaptador de la lista
-        val listaProductos: MutableList<Productos> = mutableListOf()
+//        val listaProductos: MutableList<Productos> = mutableListOf()
 
-        val adapterProductos = AdaptaProducto(this, listaProductos)
-        recyclerView_productos.adapter=adapterProductos
+        productAdapter = AdaptaProducto(this, listProduct)
+        recyclerView_productos.adapter=productAdapter
 
-        //Prueba de adición manual de producto
+        /*//Prueba de adición manual de producto
         val producto1=Productos("https://firebasestorage.googleapis.com/v0/b/proyecto-ciclo-4.appspot.com/o/tomateproduc.jpg?alt=media&token=18bd0e62-1600-4059-92c1-157f1eb7fc55","Tomate","Tomate fresco","1000","Diana","Hortalizas")
 
-        listaProductos.add(producto1)
+        listProduct.add(producto1)*/
 
         //Adición de productos por Firestore
 
-        /*db.collection("product").get().addOnSuccessListener { result ->
+        db.collection("product").get().addOnSuccessListener { result ->
 
             for (document in result){
 
-                listaProductos.add(
+                listProduct.add(
                     Productos(
 //                        document.data["foto"].toString(),
 //                        document.data["nombre"].toString(),
@@ -80,8 +84,8 @@ class HomeActivity : AppCompatActivity() {
                     )
                 )
             }
+            productAdapter.notifyDataSetChanged();
         }
-*/
 
 /*
 
