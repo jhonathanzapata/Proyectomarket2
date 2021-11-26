@@ -52,6 +52,9 @@ inner class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     val categoria = itemView.findViewById<TextView>(R.id.categoriaProducto)
     val puntuacion=itemView.findViewById<TextView>(R.id.promediopuntuacion)
 
+
+
+
     init {
         itemView.setOnClickListener(this)
     }
