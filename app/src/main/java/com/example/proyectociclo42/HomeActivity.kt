@@ -25,7 +25,7 @@ enum class ProviderType{
 }
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
-    AdapterView.OnItemSelectedListener {
+    AdapterView.OnItemSelectedListener, AdaptaProducto.OnItemClickListener{
 
     private var email_Text_View: TextView?=null
     private var provider_Text_View: TextView?=null
@@ -60,7 +60,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         //Adición de productos por Firestore
         getAllProduct()
 
-        productAdapter = AdaptaProducto(this, listProduct)
+        productAdapter = AdaptaProducto(this, listProduct,this)
         recyclerView_productos.adapter=productAdapter
 
         //Search
@@ -190,7 +190,8 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                         document.get("descripcion").toString(),
                         document.get("precio").toString(),
                         document.get("vendedor").toString(),
-                        document.get("categoria").toString()
+                        document.get("categoria").toString(),
+                        document.id,
 
                     )
                 )
@@ -284,7 +285,8 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("descripcion").toString(),
                                 document.get("precio").toString(),
                                 document.get("vendedor").toString(),
-                                document.get("categoria").toString()
+                                document.get("categoria").toString(),
+                                document.id,
                             )
                         )
 
@@ -310,7 +312,8 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("descripcion").toString(),
                                 document.get("precio").toString(),
                                 document.get("vendedor").toString(),
-                                document.get("categoria").toString()
+                                document.get("categoria").toString(),
+                                document.id,
                             )
                         )
 
@@ -335,7 +338,8 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("descripcion").toString(),
                                 document.get("precio").toString(),
                                 document.get("vendedor").toString(),
-                                document.get("categoria").toString()
+                                document.get("categoria").toString(),
+                                document.id,
                             )
                         )
 
@@ -362,12 +366,29 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("descripcion").toString(),
                                 document.get("precio").toString(),
                                 document.get("vendedor").toString(),
-                                document.get("categoria").toString()
+                                document.get("categoria").toString(),
+                                document.id,
                             )
                         )
 
                 }
                 productAdapter.notifyDataSetChanged();
             }
+    }
+
+    override fun onItemClick(position: Int) {
+        val productItem: Productos = listProduct[position]
+
+        //Go  ProductActivity
+        val prefs: SharedPreferences= getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val email:String? = prefs.getString("email", null)
+
+        val DetailIntent= Intent(this,DetailActivity::class.java).apply {
+            putExtra("email",email)
+            putExtra("product",productItem.id)
+        }
+        startActivity(DetailIntent)
+
+
     }
 }

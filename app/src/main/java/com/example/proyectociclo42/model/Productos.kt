@@ -7,6 +7,7 @@ data class Productos(
     val precio: String,
     val vendedor:String,
     val categoria:String,
+    val id:String,
 
 )
 
