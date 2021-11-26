@@ -8,10 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.widget.SearchView
 import com.google.firebase.auth.FirebaseAuth
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +24,8 @@ enum class ProviderType{
     GOOGLE
 }
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    AdapterView.OnItemSelectedListener {
 
     private var email_Text_View: TextView?=null
     private var provider_Text_View: TextView?=null
@@ -36,6 +35,13 @@ class HomeActivity : AppCompatActivity() {
     private var listProduct = mutableListOf<Productos>()
     private lateinit var productAdapter: AdaptaProducto
     private lateinit var recycleView: RecyclerView
+
+    private lateinit var svSearch: SearchView
+
+    private lateinit var spinnerCategory: Spinner
+    private lateinit var spinnerSeller: Spinner
+    private var listCategory = arrayListOf<String>()
+    private var listSeller = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,40 +57,46 @@ class HomeActivity : AppCompatActivity() {
         //configuracion del adaptador de la lista
 //        val listaProductos: MutableList<Productos> = mutableListOf()
 
+        //Adición de productos por Firestore
+        getAllProduct()
+
         productAdapter = AdaptaProducto(this, listProduct)
         recyclerView_productos.adapter=productAdapter
 
-        /*//Prueba de adición manual de producto
-        val producto1=Productos("https://firebasestorage.googleapis.com/v0/b/proyecto-ciclo-4.appspot.com/o/tomateproduc.jpg?alt=media&token=18bd0e62-1600-4059-92c1-157f1eb7fc55","Tomate","Tomate fresco","1000","Diana","Hortalizas")
+        //Search
+        svSearch = findViewById<SearchView>(R.id.svSearch)
+        svSearch.setOnQueryTextListener(this)
 
-        listProduct.add(producto1)*/
+        //Spinner Category
+        spinnerCategory = findViewById(R.id.category_spinner)
+        spinnerCategory.onItemSelectedListener = this
+        listCategory.add("All")
 
-        //Adición de productos por Firestore
-
-        db.collection("product").get().addOnSuccessListener { result ->
-
-            for (document in result){
-
-                listProduct.add(
-                    Productos(
-//                        document.data["foto"].toString(),
-//                        document.data["nombre"].toString(),
-//                        document.data["descripcion"].toString(),
-//                        document.data["precio"].toString(),
-//                        document.data["vendedor"].toString(),
-//                        document.data["categoria"].toString()
-
-                        document.get("foto").toString(),
-                        document.get("nombre").toString(),
-                        document.get("descripcion").toString(),
-                        document.get("precio").toString(),
-                        document.get("vendedor").toString(),
-                        document.get("categoria").toString()
-
-                    )
-                )
+        this?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_item,
+                listCategory
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerCategory.adapter = adapter
             }
-            productAdapter.notifyDataSetChanged();
+        }
+
+        //Spinner Seller
+        spinnerSeller = findViewById(R.id.seller_spinner)
+        spinnerSeller.onItemSelectedListener = this
+        listSeller.add("All")
+
+        this?.let {
+            ArrayAdapter(
+                it,
+                android.R.layout.simple_spinner_item,
+                listSeller
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerSeller.adapter = adapter
+            }
         }
 
 /*
@@ -147,6 +159,47 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    private fun getAllProduct(){
+
+        listProduct.clear()
+
+        db.collection("product").get().addOnSuccessListener { result ->
+
+            for (document in result){
+
+                if (!listCategory.contains(document.data["categoria"].toString())) {
+                    listCategory.add(document.data["categoria"].toString())
+                }
+
+                if (!listSeller.contains(document.data["vendedor"].toString())) {
+                    listSeller.add(document.data["vendedor"].toString())
+                }
+
+
+                listProduct.add(
+                    Productos(
+//                        document.data["foto"].toString(),
+//                        document.data["nombre"].toString(),
+//                        document.data["descripcion"].toString(),
+//                        document.data["precio"].toString(),
+//                        document.data["vendedor"].toString(),
+//                        document.data["categoria"].toString()
+
+                        document.get("foto").toString(),
+                        document.get("nombre").toString(),
+                        document.get("descripcion").toString(),
+                        document.get("precio").toString(),
+                        document.get("vendedor").toString(),
+                        document.get("categoria").toString()
+
+                    )
+                )
+            }
+            productAdapter.notifyDataSetChanged();
+        }
+
+    }
+
     private fun setup(email:String,provider:String){
 
         title="Inicio"
@@ -169,5 +222,152 @@ class HomeActivity : AppCompatActivity() {
         //onBackPressed()
         val intentsignout= Intent(this, AuthActivity::class.java)
         startActivity(intentsignout)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        return true;
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        if (newText!!.isEmpty()) {
+            getAllProduct()
+        } else {
+            searchForTitle(newText)
+        }
+
+        return true;
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        if (parent != null) {
+
+            var category: String = spinnerCategory.getSelectedItem().toString()
+            var seller: String = spinnerSeller.getSelectedItem().toString()
+
+            var all = "All"
+
+            if (category == all && seller == all) {
+                getAllProduct()
+            } else {
+                if (category == all) {
+                    filterForSeller(seller)
+                } else {
+                    if (seller == all) {
+                        filterForCategory(category)
+                    } else {
+                        filterForCategoryAndSeller(category, seller)
+                    }
+                }
+            }
+
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
+    }
+
+    private fun filterForCategory(category: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("categoria", category)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+
+
+                        listProduct.add(
+                            Productos(
+    //
+                                document.get("foto").toString(),
+                                document.get("nombre").toString(),
+                                document.get("descripcion").toString(),
+                                document.get("precio").toString(),
+                                document.get("vendedor").toString(),
+                                document.get("categoria").toString()
+                            )
+                        )
+
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+    private fun filterForSeller(seller: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("vendedor", seller)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+
+
+                        listProduct.add(
+                            Productos(
+                                //
+                                document.get("foto").toString(),
+                                document.get("nombre").toString(),
+                                document.get("descripcion").toString(),
+                                document.get("precio").toString(),
+                                document.get("vendedor").toString(),
+                                document.get("categoria").toString()
+                            )
+                        )
+
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+    private fun filterForCategoryAndSeller(category: String, seller: String) {
+        listProduct.clear()
+
+        db.collection("product")
+            .whereEqualTo("vendedor", seller).whereEqualTo("categoria", category)
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+
+                        listProduct.add(
+                            Productos(
+                                //
+                                document.get("foto").toString(),
+                                document.get("nombre").toString(),
+                                document.get("descripcion").toString(),
+                                document.get("precio").toString(),
+                                document.get("vendedor").toString(),
+                                document.get("categoria").toString()
+                            )
+                        )
+
+                }
+                productAdapter.notifyDataSetChanged();
+            }
+    }
+
+
+
+    private fun searchForTitle(newText: String) {
+        listProduct.clear()
+        db.collection("product")
+            .whereGreaterThanOrEqualTo("nombre", newText)
+            .whereLessThanOrEqualTo("nombre", (newText + "\uF7FF"))
+            .get().addOnSuccessListener { result ->
+                for (document in result) {
+
+                        listProduct.add(
+                            Productos(
+//
+                                document.get("foto").toString(),
+                                document.get("nombre").toString(),
+                                document.get("descripcion").toString(),
+                                document.get("precio").toString(),
+                                document.get("vendedor").toString(),
+                                document.get("categoria").toString()
+                            )
+                        )
+
+                }
+                productAdapter.notifyDataSetChanged();
+            }
     }
 }

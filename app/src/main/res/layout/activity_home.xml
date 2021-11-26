@@ -8,15 +8,6 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
-
 
     <TextView
         android:id="@+id/textviewemail"
@@ -77,23 +68,97 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/customborder"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/svSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:iconifiedByDefault="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:queryHint="Buscar" />
+
+        <LinearLayout
+            android:id="@+id/layoutSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="@+id/svSearch">
+
+            <LinearLayout
+                android:id="@+id/layoutSpinner1"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSpinner"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria"
+                    android:textColor="@color/teal_700"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="@+id/layoutSpinner1"/>
+
+                <Spinner
+                    android:id="@+id/category_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toBottomOf="@+id/textCategory" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutSpinner2"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/layoutSpinner"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textSeller"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Vendedor"
+                    android:textColor="@color/teal_700"
+                    android:textSize="12sp"
+                    app:layout_constraintTop_toTopOf="@+id/layoutSpinner2"/>
+
+                <Spinner
+                    android:id="@+id/seller_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    app:layout_constraintTop_toTopOf="@+id/textSeller"
+                    tools:layout_editor_absoluteX="0dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_productos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/text_blue"
-        android:src="@android:drawable/ic_input_add"
-        tools:ignore="SpeakableTextPresentCheck" />
 
 
 
