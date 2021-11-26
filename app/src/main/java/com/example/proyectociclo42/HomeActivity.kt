@@ -19,6 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 
+
+
 enum class ProviderType{
     BASIC,
     GOOGLE
@@ -419,17 +421,22 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
 
         var average : Double = 0.0
 
+        //var listNumbers = arrayListOf<Double>()
+
         db.collection("product").document(product).collection("puntuaciones").get()
             .addOnSuccessListener {
 
                 if (it.any()) {
                     for (score in it) {
                         average += (score.get("puntuacion").toString()).toDouble()
+                        //listNumbers.add((score.get("puntuacion").toString()).toDouble())
                     }
                     average /= (it.count())
+
                     productAdapter.notifyDataSetChanged();
                 }
             }
+        //average=(listNumbers.sum())/listNumbers.count()
 
         return average
     }

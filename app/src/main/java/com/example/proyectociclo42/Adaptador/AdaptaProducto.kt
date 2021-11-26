@@ -37,6 +37,7 @@ class AdaptaProducto (private val context: Context, private val productos:Mutabl
         holder.categoria.text=productos[position].categoria
         holder.puntuacion.text=(productos[position].puntuacion).toString()
 
+
     }
 
     override fun getItemCount(): Int = productos.size
