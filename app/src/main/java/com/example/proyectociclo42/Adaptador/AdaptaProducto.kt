@@ -35,8 +35,7 @@ class AdaptaProducto (private val context: Context, private val productos:Mutabl
         holder.precio.text= productos[position].precio
         holder.vendedor.text=productos[position].vendedor
         holder.categoria.text=productos[position].categoria
-
-
+        holder.puntuacion.text=(productos[position].puntuacion).toString()
 
     }
 
@@ -50,6 +49,7 @@ inner class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     val precio = itemView.findViewById<TextView>(R.id.precioProducto)
     val vendedor = itemView.findViewById<TextView>(R.id.vendedorProducto)
     val categoria = itemView.findViewById<TextView>(R.id.categoriaProducto)
+    val puntuacion=itemView.findViewById<TextView>(R.id.promediopuntuacion)
 
     init {
         itemView.setOnClickListener(this)

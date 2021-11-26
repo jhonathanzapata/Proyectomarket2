@@ -8,6 +8,7 @@ data class Productos(
     val vendedor:String,
     val categoria:String,
     val id:String,
+    val puntuacion:Double,
 
 )
 

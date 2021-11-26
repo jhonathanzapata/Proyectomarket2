@@ -175,9 +175,13 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                     listSeller.add(document.data["vendedor"].toString())
                 }
 
+                var productExist = listProduct.find { it.id == document.id }
 
-                listProduct.add(
-                    Productos(
+                if (productExist == null) {
+
+
+                    listProduct.add(
+                        Productos(
 //                        document.data["foto"].toString(),
 //                        document.data["nombre"].toString(),
 //                        document.data["descripcion"].toString(),
@@ -185,16 +189,18 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
 //                        document.data["vendedor"].toString(),
 //                        document.data["categoria"].toString()
 
-                        document.get("foto").toString(),
-                        document.get("nombre").toString(),
-                        document.get("descripcion").toString(),
-                        document.get("precio").toString(),
-                        document.get("vendedor").toString(),
-                        document.get("categoria").toString(),
-                        document.id,
+                            document.get("foto").toString(),
+                            document.get("nombre").toString(),
+                            document.get("descripcion").toString(),
+                            document.get("precio").toString(),
+                            document.get("vendedor").toString(),
+                            document.get("categoria").toString(),
+                            document.id,
+                            averageScore(document.id),
 
+                            )
                     )
-                )
+                }
             }
             productAdapter.notifyDataSetChanged();
         }
@@ -276,10 +282,14 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
 
+                    var productExist = listProduct.find { it.id == document.id }
+
+                    if (productExist == null) {
+
 
                         listProduct.add(
                             Productos(
-    //
+                                //
                                 document.get("foto").toString(),
                                 document.get("nombre").toString(),
                                 document.get("descripcion").toString(),
@@ -287,9 +297,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
+                                averageScore(document.id),
                             )
                         )
-
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -303,6 +314,9 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
 
+                    var productExist = listProduct.find { it.id == document.id }
+
+                    if (productExist == null) {
 
                         listProduct.add(
                             Productos(
@@ -314,8 +328,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
+                                averageScore(document.id),
                             )
                         )
+                    }
 
                 }
                 productAdapter.notifyDataSetChanged();
@@ -330,6 +346,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
 
+                    var productExist = listProduct.find { it.id == document.id }
+
+                    if (productExist == null) {
+
                         listProduct.add(
                             Productos(
                                 //
@@ -340,9 +360,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
+                                averageScore(document.id),
                             )
                         )
-
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -358,6 +379,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
             .get().addOnSuccessListener { result ->
                 for (document in result) {
 
+                    var productExist = listProduct.find { it.id == document.id }
+
+                    if (productExist == null) {
+
                         listProduct.add(
                             Productos(
 //
@@ -368,9 +393,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
+                                averageScore(document.id),
                             )
                         )
-
+                    }
                 }
                 productAdapter.notifyDataSetChanged();
             }
@@ -380,15 +406,31 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         val productItem: Productos = listProduct[position]
 
         //Go  ProductActivity
-        val prefs: SharedPreferences= getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        val email:String? = prefs.getString("email", null)
 
         val DetailIntent= Intent(this,DetailActivity::class.java).apply {
-            putExtra("email",email)
+
             putExtra("product",productItem.id)
         }
         startActivity(DetailIntent)
 
+    }
 
+    private fun averageScore(product: String):Double{
+
+        var average : Double = 0.0
+
+        db.collection("product").document(product).collection("puntuaciones").get()
+            .addOnSuccessListener {
+
+                if (it.any()) {
+                    for (score in it) {
+                        average += (score.get("puntuacion").toString()).toDouble()
+                    }
+                    average /= (it.count())
+                    productAdapter.notifyDataSetChanged();
+                }
+            }
+
+        return average
     }
 }
