@@ -37,6 +37,7 @@ class AdaptaProducto (private val context: Context, private val productos:Mutabl
         holder.categoria.text=productos[position].categoria
         holder.puntuacion.text=(productos[position].puntuacion).toString()
 
+
     }
 
     override fun getItemCount(): Int = productos.size
@@ -50,6 +51,9 @@ inner class ProductoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVie
     val vendedor = itemView.findViewById<TextView>(R.id.vendedorProducto)
     val categoria = itemView.findViewById<TextView>(R.id.categoriaProducto)
     val puntuacion=itemView.findViewById<TextView>(R.id.promediopuntuacion)
+
+
+
 
     init {
         itemView.setOnClickListener(this)

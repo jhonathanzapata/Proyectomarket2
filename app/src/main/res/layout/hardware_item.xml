@@ -7,11 +7,11 @@
 
     <ImageView
         android:id="@+id/fotoProduto"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="134dp"
+        android:layout_height="132dp"
         android:src="@drawable/cebollaproduc"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nombreProducto"
@@ -46,47 +46,47 @@
         android:id="@+id/precioProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="4dp"
         android:text="$800Lib"
-        android:textSize="19sp"
         android:textColor="@android:color/holo_orange_dark"
+        android:textSize="19sp"
         android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/descripcionProducto"
-        app:layout_constraintStart_toEndOf="@id/fotoProduto"/>
+        app:layout_constraintStart_toEndOf="@id/fotoProduto"
+        app:layout_constraintTop_toBottomOf="@id/descripcionProducto" />
 
     <TextView
         android:id="@+id/categoriaProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="8dp"
         android:text="frutas"
         android:textSize="19sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/precioProducto"
-        app:layout_constraintStart_toEndOf="@id/fotoProduto"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fotoProduto" />
 
     <TextView
         android:id="@+id/vendedorProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="4dp"
         android:text="Carlos"
         android:textSize="19sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/categoriaProducto"
-        app:layout_constraintStart_toEndOf="@id/fotoProduto"/>
+        app:layout_constraintStart_toEndOf="@id/fotoProduto"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
 
     <TextView
         android:id="@+id/promediopuntuacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="232dp"
+        android:layout_marginTop="4dp"
         android:text="0.0"
         android:textSize="19sp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/vendedorProducto"
-        app:layout_constraintStart_toEndOf="@id/fotoProduto"/>
+        app:layout_constraintStart_toEndOf="@id/fotoProduto"
+        app:layout_constraintTop_toBottomOf="@+id/descripcionProducto" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
