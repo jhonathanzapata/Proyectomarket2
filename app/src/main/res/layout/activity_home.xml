@@ -8,6 +8,7 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
+
     <LinearLayout
         android:layout_width="411dp"
         android:layout_height="wrap_content"
@@ -19,7 +20,7 @@
 
         <TextView
             android:id="@+id/textviewemail"
-            android:layout_width="140dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -52,7 +53,7 @@
             android:id="@+id/cerrarsecion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
             android:background="@drawable/customborder"
             android:gravity="center"
             android:orientation="vertical"
@@ -63,14 +64,15 @@
                 android:id="@+id/btn_cerrarsesion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:onClick="signOut"
+                android:orientation="vertical"
                 android:text="Cerrar Sesion" />
 
         </LinearLayout>
 
 
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/layout"
