@@ -21,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 
 
+
 enum class ProviderType{
     BASIC,
     GOOGLE
@@ -167,6 +168,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
 
         db.collection("product").get().addOnSuccessListener { result ->
 
+
             for (document in result){
 
                 if (!listCategory.contains(document.data["categoria"].toString())) {
@@ -198,12 +200,15 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                             document.get("vendedor").toString(),
                             document.get("categoria").toString(),
                             document.id,
-                            averageScore(document.id),
+                            document.get("promedio").toString().toDouble(),
 
                             )
                     )
                 }
             }
+
+            averageScore();
+
             productAdapter.notifyDataSetChanged();
         }
 
@@ -299,7 +304,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
-                                averageScore(document.id),
+                                document.get("promedio").toString().toDouble(),
                             )
                         )
                     }
@@ -330,7 +335,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
-                                averageScore(document.id),
+                                document.get("promedio").toString().toDouble(),
                             )
                         )
                     }
@@ -362,7 +367,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
-                                averageScore(document.id),
+                                document.get("promedio").toString().toDouble(),
                             )
                         )
                     }
@@ -395,7 +400,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
                                 document.get("vendedor").toString(),
                                 document.get("categoria").toString(),
                                 document.id,
-                                averageScore(document.id),
+                                document.get("promedio").toString().toDouble(),
                             )
                         )
                     }
@@ -417,27 +422,28 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
 
     }
 
-    private fun averageScore(product: String):Double{
+    private fun averageScore(){
 
-        var average : Double = 0.0
+        for (product in listProduct) {
+            var average = 0.0
 
-        //var listNumbers = arrayListOf<Double>()
+            db.collection("product").document(product.id).collection("comentarios").get()
+                .addOnSuccessListener {
 
-        db.collection("product").document(product).collection("puntuaciones").get()
-            .addOnSuccessListener {
+                    if (it.any()) {
+                        for (score in it) {
+                            average += (score.get("puntuacion").toString()).toDouble()
 
-                if (it.any()) {
-                    for (score in it) {
-                        average += (score.get("puntuacion").toString()).toDouble()
-                        //listNumbers.add((score.get("puntuacion").toString()).toDouble())
+                        }
+                        db.collection("product").document(product.id).update(
+                            "promedio",  average / it.count()
+                        )
                     }
-                    average /= (it.count())
-
-                    productAdapter.notifyDataSetChanged();
                 }
-            }
-        //average=(listNumbers.sum())/listNumbers.count()
 
-        return average
+
+        }
+
+
     }
 }

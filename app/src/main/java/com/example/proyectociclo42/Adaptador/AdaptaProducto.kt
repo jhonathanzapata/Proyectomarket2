@@ -1,6 +1,7 @@
 package com.example.proyectociclo42.Adaptador
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,18 @@ class AdaptaProducto (private val context: Context, private val productos:Mutabl
         holder.precio.text= productos[position].precio
         holder.vendedor.text=productos[position].vendedor
         holder.categoria.text=productos[position].categoria
-        holder.puntuacion.text=(productos[position].puntuacion).toString()
+
+
+
+        var average= productos[position].puntuacion;
+        if(average>0){
+            holder.puntuacion.text=(productos[position].puntuacion).toString()
+            //holder.puntuacion.setTextColor(Color.BLUE);
+        } else{
+            holder.puntuacion.visibility=View.INVISIBLE
+            //holder.puntuacion.setTextColor(Color.RED);
+        }
+
 
 
     }

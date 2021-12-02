@@ -63,6 +63,75 @@
 
             </LinearLayout>
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/costProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:textColor="@color/green"
+                    android:textSize="25dp" />
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/less"
+                        android:layout_width="25dp"
+                        android:layout_height="40dp"
+                        android:padding="0.1sp"
+                        android:backgroundTint="@color/green"
+                        android:text="-"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/black"
+                        android:textSize="20dp" />
+
+
+                    <Button
+                        android:id="@+id/more"
+                        android:layout_width="25dp"
+                        android:layout_height="40dp"
+                        android:padding="0.1sp"
+                        android:backgroundTint="@color/green"
+                        android:text="+"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+                <ImageButton
+                    android:id="@+id/addCar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/customborder"
+                    android:src="@drawable/imagen_carrito"
+                    android:scaleType="centerInside"/>
+
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/desProduct"
                 android:layout_width="match_parent"
@@ -79,22 +148,23 @@
                 android:textSize="18sp"
                 android:layout_margin="10dp"/>
 
-            <TextView
-                android:id="@+id/preProducto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:textSize="18sp"
-                android:layout_margin="10dp"/>
 
         </LinearLayout>
 
+        <!--<ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="0dp"
+            android:layout_marginTop="5dp">-->
 
         <ListView
             android:id="@+id/listComments"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
+
+<!--        </ScrollView>-->
 
         <Button
             android:id="@+id/btn_volver"
@@ -105,6 +175,7 @@
             android:text="Volver"
             android:backgroundTint="@color/green"
             android:textStyle="bold" />
+
 
 
     </LinearLayout>
