@@ -75,6 +75,15 @@
         android:onClick="onReturnHome"
         android:textStyle="bold" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Ver ordenes"
+        android:backgroundTint="@color/text_blue"
+        android:onClick="onOrderView"
+        android:textStyle="bold" />
+
 
 
 </LinearLayout>

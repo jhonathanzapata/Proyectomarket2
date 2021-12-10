@@ -51,15 +51,10 @@ class StorageActivity : AppCompatActivity(), AdaptaCarrito.OnItemClickListener {
             prefsDeleteCar.remove("car")
             prefsDeleteCar.apply()
 
-            //Pendiente por hacer
 
-            //onOrder()
+            onOrder()
 
-            /*
-            var nav = Navigation.createNavigateOnClickListener(R.id.nav_slideshow)
-            nav.onClick(view);
 
-             */
         }
 
     }
@@ -127,13 +122,18 @@ class StorageActivity : AppCompatActivity(), AdaptaCarrito.OnItemClickListener {
         getAllCarNew();
     }
 
-    /*
+
     fun onOrder(){
         val orderIntent= Intent(this,OrderActivity::class.java)
         startActivity(orderIntent)
     }
 
-     */
+    fun onOrderView(view: android.view.View) {
+
+        onOrder();
+    }
+
+
 
 
 
