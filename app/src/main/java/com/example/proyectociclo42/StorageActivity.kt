@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@ import com.example.proyectociclo42.Adaptador.AdaptaCarrito
 import com.example.proyectociclo42.model.ProductosCarrito
 import com.google.firebase.firestore.FirebaseFirestore
 
-class StorageActivity : AppCompatActivity() {
+class StorageActivity : AppCompatActivity(), AdaptaCarrito.OnItemClickListener {
 
 
     private lateinit var recycleView: RecyclerView
@@ -21,10 +22,14 @@ class StorageActivity : AppCompatActivity() {
     private lateinit var carAdapter: AdaptaCarrito
     private var total = 0
     private var totalText : TextView?=null
+    var idCar = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage)
+
+        val prefs = getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        idCar = prefs.getString("car", null).toString()
 
         //Recycler
         recycleView = findViewById<RecyclerView>(R.id.reclyclerCar)
@@ -32,20 +37,39 @@ class StorageActivity : AppCompatActivity() {
         recycleView.setHasFixedSize(true)
 
         getAllCarNew()
-        carAdapter = AdaptaCarrito(listCar);
+        carAdapter = AdaptaCarrito(listCar, this);
         recycleView.adapter = carAdapter;
 
         totalText = findViewById<TextView>(R.id.total)
+
+        var buttonBuy = findViewById<Button>(R.id.buy)
+        buttonBuy.setOnClickListener {
+
+            db.collection("car").document(idCar).update("state",true)
+
+            val prefsDeleteCar= getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            prefsDeleteCar.remove("car")
+            prefsDeleteCar.apply()
+
+            //Pendiente por hacer
+
+            //onOrder()
+
+            /*
+            var nav = Navigation.createNavigateOnClickListener(R.id.nav_slideshow)
+            nav.onClick(view);
+
+             */
+        }
+
     }
 
     private fun getAllCarNew() {
         listCar.clear()
 
-        var idCar = ""
-        val prefs = getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE)
-        idCar = prefs.getString("car", null).toString()
 
-        if(idCar != null && idCar.isNotEmpty()){
+
+        if(idCar != null && idCar.isNotEmpty() && idCar != "null"){
 
             db.collection("car").document(idCar).collection("products")
                 .get().addOnSuccessListener {
@@ -92,6 +116,24 @@ class StorageActivity : AppCompatActivity() {
         }
         startActivity(returnHomeIntent)
     }
+
+    override fun onItemClick(position: Int) {
+        val carItem: ProductosCarrito = listCar[position]
+
+        if(idCar != null && idCar.isNotEmpty() && idCar != "null"){
+            db.collection("car").document(idCar).collection("products").document(carItem.id).delete()
+        }
+
+        getAllCarNew();
+    }
+
+    /*
+    fun onOrder(){
+        val orderIntent= Intent(this,OrderActivity::class.java)
+        startActivity(orderIntent)
+    }
+
+     */
 
 
 

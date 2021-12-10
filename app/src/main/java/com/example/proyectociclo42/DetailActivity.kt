@@ -1,11 +1,14 @@
 package com.example.proyectociclo42
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.*
+import com.example.proyectociclo42.model.Productos
 import com.google.firebase.firestore.FirebaseFirestore
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -82,10 +85,29 @@ class DetailActivity : AppCompatActivity() {
         buttonAddCar.setOnClickListener {
 
             //Save Car
+            var listProduct = mutableListOf<String>()
+            var idComprobacion=""
             var idCar = ""
             val getPrefs = getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE)
-            idCar = getPrefs.getString("car", null).toString()
             var email = getPrefs.getString("email", null).toString()
+
+            /*db.collection("car").get().addOnSuccessListener { result ->
+
+                for (document in result) {
+                    listProduct.add(document.id)
+                }
+            }
+
+            for(item in listProduct){
+
+                idComprobacion= item
+            }
+
+            val setPrefs2 = getSharedPreferences(resources.getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+            setPrefs2.putString("car",idComprobacion)
+            setPrefs2.apply()
+*/
+            idCar = getPrefs.getString("car", null).toString()
 
             if(idCar == null || idCar.isEmpty() || idCar == "null"){
                 idCar = UUID.randomUUID().toString()
