@@ -239,6 +239,11 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         startActivity(intentsignout)
     }
 
+    fun onOrder(botonOrder:View){
+        val orderIntent= Intent(this,OrderActivity::class.java)
+        startActivity(orderIntent)
+    }
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true;
     }

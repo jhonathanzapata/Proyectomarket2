@@ -8,19 +8,6 @@
     android:orientation="vertical"
     tools:context=".HomeActivity">
 
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-
-
-    </ScrollView>
 
 
     <LinearLayout
@@ -70,7 +57,7 @@
             android:layout_gravity="center_horizontal"
             android:background="@drawable/customborder"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@+id/textviewemail"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -81,7 +68,20 @@
                 android:gravity="center"
                 android:onClick="signOut"
                 android:orientation="vertical"
+
                 android:text="Cerrar Sesion" />
+
+            <ImageButton
+
+                android:layout_width="66dp"
+                android:layout_height="64dp"
+                android:layout_marginStart="15sp"
+                android:gravity="center"
+                android:background="@drawable/customborder"
+                android:src="@drawable/ordenproductos"
+                android:onClick="onOrder"
+                android:scaleType="centerInside"
+                android:orientation="vertical" />
 
         </LinearLayout>
 

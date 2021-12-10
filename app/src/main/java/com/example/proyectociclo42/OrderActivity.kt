@@ -1,6 +1,8 @@
 package com.example.proyectociclo42
 
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,6 +70,24 @@ class OrderActivity : AppCompatActivity() {
             }
     }
 
+    fun onReturnHome(view: android.view.View) {
+
+        val prefs: SharedPreferences =getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE)
+        val email:String?=prefs.getString("email",null)
+        val provider:String?=prefs.getString("provider",null)
+
+        if(email!=null && provider!=null) {
+            ReturnHome(email,ProviderType.valueOf(provider))
+        }
+    }
+
+    fun ReturnHome(email:String,provider:ProviderType){
+        val returnHomeIntent= Intent(this,HomeActivity::class.java).apply {
+            putExtra("email",email)
+            putExtra("provider",provider.name)
+        }
+        startActivity(returnHomeIntent)
+    }
 
 
 
