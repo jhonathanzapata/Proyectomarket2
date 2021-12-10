@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProyectoCiclo42">
         <activity
+            android:name=".OrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".StorageActivity"
             android:exported="false" />
         <activity
